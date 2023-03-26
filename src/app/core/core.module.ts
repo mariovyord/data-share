@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { LayoutComponent } from './layout/layout.component';
 import {RouterLink, RouterLinkWithHref} from "@angular/router";
+import {SharedModule} from "../shared/shared.module";
 
 
 
@@ -17,7 +18,8 @@ import {RouterLink, RouterLinkWithHref} from "@angular/router";
   imports: [
     CommonModule,
     RouterLink,
-    RouterLinkWithHref
+    RouterLinkWithHref,
+    SharedModule,
   ]
 })
 export class CoreModule { }

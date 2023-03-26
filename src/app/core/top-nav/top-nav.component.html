@@ -7,8 +7,12 @@
       <nav>
         <div class='hidden h-full w-full sm:block'>
           <ul class='flex h-full'>
-            <li routerLink="/" class='flex h-full items-center px-5 text-lg text-white hover:bg-lime-800'>Home</li>
-            <li routerLink="/profile" class='flex h-full items-center px-5 text-lg text-white hover:bg-lime-800'>Profile</li>
+            <app-link routerLink="/">
+              <li  class='flex h-full items-center px-5 text-lg text-white hover:bg-lime-800'>Home</li>
+            </app-link>
+            <app-link routerLink="/profile">
+              <li  class='flex h-full items-center px-5 text-lg text-white hover:bg-lime-800'>Profile</li>
+            </app-link>
           </ul>
         </div>
         <div (click)="onToggleHamburger()" class='h-full sm:hidden'>

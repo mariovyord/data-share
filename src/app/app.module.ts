@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import {CoreModule} from "./core/core.module";
+import { LinkComponent } from './shared/link/link.component';
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,7 @@ import {CoreModule} from "./core/core.module";
   ],
   providers: [],
   exports: [
-    HomeComponent
+    HomeComponent,
   ],
   bootstrap: [AppComponent]
 })
