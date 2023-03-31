@@ -9,6 +9,9 @@ import {CoreModule} from "./core/core.module";
 import { LinkComponent } from './shared/link/link.component';
 import {SharedModule} from "./shared/shared.module";
 import { GameComponent } from './components/game/game.component';
+import { AnswerButtonComponent } from './components/answer-button/answer-button.component';
+import { AnswersComponent } from './components/answers/answers.component';
+import { QuestionComponent } from './components/question/question.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,9 @@ import { GameComponent } from './components/game/game.component';
     HomeComponent,
     ProfileComponent,
     GameComponent,
+    AnswerButtonComponent,
+    AnswersComponent,
+    QuestionComponent,
   ],
   imports: [
     BrowserModule,
