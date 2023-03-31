@@ -12,6 +12,7 @@ import { GameComponent } from './components/game/game.component';
 import { AnswerButtonComponent } from './components/answer-button/answer-button.component';
 import { AnswersComponent } from './components/answers/answers.component';
 import { QuestionComponent } from './components/question/question.component';
+import { SubmitAnswerComponent } from './components/submit-answer/submit-answer.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { QuestionComponent } from './components/question/question.component';
     AnswerButtonComponent,
     AnswersComponent,
     QuestionComponent,
+    SubmitAnswerComponent,
   ],
   imports: [
     BrowserModule,
