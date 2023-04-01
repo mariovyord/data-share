@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {GameService} from "../../services/game.service";
 import {TQuestion} from "../../types/types";
 
 @Component({

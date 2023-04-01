@@ -1,13 +1,13 @@
 <div class="h-full flex items-center justify-center">
     <div class="w-full h-fit">
       <div>
-        <p class="text-center text-white mb-5">1 / 15</p>
+        <p class="text-center text-white mb-5">{{ stage$ | async }} / 15</p>
       </div>
       <div class="mb-10">
-        <app-question [question]="(question$ | async)"></app-question>
+        <app-question [question]="question$ | async"></app-question>
       </div>
       <div class="mb-10">
-        <app-answers></app-answers>
+        <app-answers [question]="question$ | async"></app-answers>
       </div>
       <div class="flex justify-center">
         <app-submit-answer></app-submit-answer>

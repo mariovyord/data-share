@@ -9,7 +9,8 @@ import { TAnswer, TQuestion, TQuestionIndex } from "../types/types";
 })
 export class DataService {
   public getQuestion(stage: TQuestionIndex): Observable<TQuestion> {
-    const questionsOfStage = questions[String(stage)];
+    const key = String(stage)
+    const questionsOfStage = questions[key];
     const randomIndex = Math.floor(Math.random() * questionsOfStage.length);
     const randomQuestion = questionsOfStage[randomIndex];
 

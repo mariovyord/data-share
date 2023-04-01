@@ -1,4 +1,4 @@
-import {BehaviorSubject, mergeMap, of, tap} from "rxjs";
+import {BehaviorSubject, mergeMap, Observable, of, tap} from "rxjs";
 import { TAnswer, TQuestion, TQuestionIndex } from "../types/types";
 import { DataService } from "./data.service";
 import { Injectable } from "@angular/core";
@@ -7,11 +7,19 @@ import { Injectable } from "@angular/core";
   providedIn: 'root'
 })
 export class GameService {
-  private stage: TQuestionIndex = 0;
   private _playerName: string | undefined;
-  public question$ = new BehaviorSubject<TQuestion | null>(null);
-  public correctAnswer$ = new BehaviorSubject<TAnswer | null>(null);
-  public loading: boolean = false;
+
+  private stageSubject = new BehaviorSubject<TQuestionIndex>(1);
+  public stage$: Observable<TQuestionIndex> = this.stageSubject.asObservable();
+
+  private questionSubject = new BehaviorSubject<TQuestion | null>(null);
+  public question$: Observable<TQuestion | null> = this.questionSubject.asObservable();
+
+  private correctAnswerSubject = new BehaviorSubject<TAnswer | null>(null);
+  private correctAnswer$: Observable<TAnswer | null> = this.correctAnswerSubject.asObservable();
+
+  public loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$: Observable<boolean> = this.loadingSubject.asObservable();
 
   constructor(private dataService: DataService) { }
 
@@ -25,38 +33,41 @@ export class GameService {
     }
   }
 
-  public startGame() {
-    this.dataService.getQuestion(0).pipe(
+  public startGame(): void {
+    this.dataService.getQuestion(1).pipe(
       mergeMap(question => {
-        this.question$.next(question);
+        this.questionSubject.next(question);
         return of(question);
       })
     ).subscribe();
   }
 
   public loadNextQuestion(): void {
-    this.loading = true;
-    this.stage = (this.stage + 1) as TQuestionIndex;
-    this.dataService.getQuestion(this.stage).pipe(
+    this.loadingSubject.next(true)
+    const nextStage = this.stageSubject.value + 1 as TQuestionIndex;
+
+    this.stageSubject.next(nextStage)
+
+    this.dataService.getQuestion(nextStage).pipe(
       mergeMap(question => {
-        this.question$.next(question);
+        this.questionSubject.next(question);
         return of(question);
       }),
-      tap(() => this.loading = false)
+      tap(() => this.loadingSubject.next(false))
     ).subscribe();
   }
 
   public loadAnswer(): void {
-    this.dataService.getAnswer(this.stage, "TEST").pipe(
+    this.dataService.getAnswer(this.stageSubject.value, "TEST").pipe(
       mergeMap(answer => {
-        this.correctAnswer$.next(answer);
+        this.correctAnswerSubject.next(answer);
         return of(answer);
       })
     ).subscribe();
   }
 
   public clearQuestion(): void {
-    this.question$.next(null);
-    this.correctAnswer$.next(null);
+    this.questionSubject.next(null);
+    this.correctAnswerSubject.next(null);
   }
 }
