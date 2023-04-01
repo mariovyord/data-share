@@ -1,15 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {Status, TAnswer, TQuestion, TQuestionIndex} from "../types/types";
+import {BehaviorSubject, mergeMap, of, tap} from "rxjs";
+import { TAnswer, TQuestion, TQuestionIndex } from "../types/types";
 import { DataService } from "./data.service";
+import { Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
-  private status: Status = Status.PLAYING;
   private stage: TQuestionIndex = 0;
   private _playerName: string | undefined;
+  public question$ = new BehaviorSubject<TQuestion | null>(null);
+  public correctAnswer$ = new BehaviorSubject<TAnswer | null>(null);
+  public loading: boolean = false;
 
   constructor(private dataService: DataService) { }
 
@@ -17,20 +19,44 @@ export class GameService {
     return this._playerName;
   }
 
-  public setPlayerName(name: string): string {
+  public setPlayerName(name: string): void {
     if (typeof this._playerName !== "string") {
       this._playerName = name;
     }
-
-    return this._playerName;
   }
 
-  public getNextQuestion(): Observable<TQuestion> {
-      this.stage = (this.stage + 1) as TQuestionIndex;
-      return this.dataService.getQuestion(this.stage);
+  public startGame() {
+    this.dataService.getQuestion(0).pipe(
+      mergeMap(question => {
+        this.question$.next(question);
+        return of(question);
+      })
+    ).subscribe();
   }
 
-  private getAnswer(): Observable<TAnswer | null> {
-    return this.dataService.getAnswer(this.stage, "TEST");
+  public loadNextQuestion(): void {
+    this.loading = true;
+    this.stage = (this.stage + 1) as TQuestionIndex;
+    this.dataService.getQuestion(this.stage).pipe(
+      mergeMap(question => {
+        this.question$.next(question);
+        return of(question);
+      }),
+      tap(() => this.loading = false)
+    ).subscribe();
+  }
+
+  public loadAnswer(): void {
+    this.dataService.getAnswer(this.stage, "TEST").pipe(
+      mergeMap(answer => {
+        this.correctAnswer$.next(answer);
+        return of(answer);
+      })
+    ).subscribe();
+  }
+
+  public clearQuestion(): void {
+    this.question$.next(null);
+    this.correctAnswer$.next(null);
   }
 }

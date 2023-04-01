@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {GameService} from "../../services/game.service";
+import {TQuestion} from "../../types/types";
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
+  public question$: TQuestion | null = null;
 
-  constructor() { }
+  constructor(private gameService: GameService) {}
 
-  ngOnInit(): void {
+  public startGame() {
+    this.gameService.startGame();
+
   }
-
 }

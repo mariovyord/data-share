@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {map, Observable, of} from "rxjs";
+import { map, Observable, of } from "rxjs";
 import { questions } from "../data/questions";
 import { answers } from "../data/answers";
-import {TAnswer, TQuestion, TQuestionIndex} from "../types/types";
+import { TAnswer, TQuestion, TQuestionIndex } from "../types/types";
 
 @Injectable({
   providedIn: 'root'

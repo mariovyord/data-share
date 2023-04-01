@@ -4,7 +4,7 @@
         <p class="text-center text-white mb-5">1 / 15</p>
       </div>
       <div class="mb-10">
-        <app-question></app-question>
+        <app-question [question]="(question$ | async)"></app-question>
       </div>
       <div class="mb-10">
         <app-answers></app-answers>
