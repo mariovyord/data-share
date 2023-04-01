@@ -1,4 +1,8 @@
-{
+import {TAnswer} from "../types/types";
+
+export  const answers: {
+  [key: string]: TAnswer[]
+}  = {
   "1": [
     {
       "id": "1",
