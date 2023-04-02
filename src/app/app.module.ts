@@ -11,6 +11,7 @@ import { AnswerButtonComponent } from './components/answer-button/answer-button.
 import { AnswersComponent } from './components/answers/answers.component';
 import { QuestionComponent } from './components/question/question.component';
 import { SubmitAnswerComponent } from './components/submit-answer/submit-answer.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SubmitAnswerComponent } from './components/submit-answer/submit-answer.
     AnswersComponent,
     QuestionComponent,
     SubmitAnswerComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

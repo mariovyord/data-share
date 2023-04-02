@@ -1,4 +1,4 @@
-<div class="h-full flex items-center justify-center">
+<div class="h-full flex pt-[20%]">
     <div class="w-full h-fit">
       <div>
         <p class="text-center text-white mb-5">{{ stage$ | async }} / 15</p>
@@ -12,6 +12,7 @@
       <div class="flex justify-center">
         <app-submit-answer (click)="onSubmit()" *ngIf="(status$ | async) === Status.PLAYING">Submit</app-submit-answer>
         <app-submit-answer (click)="onNext()" *ngIf="(status$ | async) === Status.NEXT">Next</app-submit-answer>
+        <app-loading></app-loading>
       </div>
     </div>
 </div>
