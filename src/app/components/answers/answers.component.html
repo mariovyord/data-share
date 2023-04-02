@@ -1,10 +1,11 @@
 <div class="grid grid-cols-1 gap-4">
   <div class="grid grid-cols-2 gap-4">
-    <app-answer-button>{{ question?.answers?.[0] }}</app-answer-button>
-    <app-answer-button>{{ question?.answers?.[1] }}</app-answer-button>
+    <app-answer-button (click)="onSelect(0)" [selected]="(selectedAnswer$ | async) === 0">{{ question?.answers?.[0] }}</app-answer-button>
+    <app-answer-button (click)="onSelect(1)" [selected]="(selectedAnswer$ | async) === 1">{{ question?.answers?.[1] }}</app-answer-button>
   </div>
   <div class="grid grid-cols-2 gap-4">
-    <app-answer-button>{{ question?.answers?.[2] }}</app-answer-button>
-    <app-answer-button>{{ question?.answers?.[3] }}</app-answer-button>
+    <app-answer-button (click)="onSelect(2)" [selected]="(selectedAnswer$ | async) === 2">{{ question?.answers?.[2] }}</app-answer-button>
+    <app-answer-button (click)="onSelect(3)" [selected]="(selectedAnswer$ | async) === 3">{{ question?.answers?.[3] }}</app-answer-button>
   </div>
 </div>
+

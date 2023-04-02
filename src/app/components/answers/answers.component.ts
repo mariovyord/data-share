@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {TQuestion} from "../../types/types";
+import { Component, Input } from '@angular/core';
+import { TQuestion, TSelectedAnswer } from "../../types/types";
+import { GameService } from "../../services/game.service";
 
 @Component({
   selector: 'app-answers',
@@ -7,4 +8,9 @@ import {TQuestion} from "../../types/types";
 })
 export class AnswersComponent {
   @Input() public question: TQuestion | null;
+  @Input() public onSelect: (answer: TSelectedAnswer) => void;
+
+  public selectedAnswer$ = this.gameService.selectedAnswer$;
+
+  constructor(private gameService: GameService) {}
 }

@@ -1,13 +1,16 @@
 import {BehaviorSubject, mergeMap, Observable, of, tap} from "rxjs";
-import { TAnswer, TQuestion, TQuestionIndex } from "../types/types";
-import { DataService } from "./data.service";
-import { Injectable } from "@angular/core";
+import {Status, TAnswer, TQuestion, TQuestionIndex, TSelectedAnswer} from "../types/types";
+import {DataService} from "./data.service";
+import {Injectable} from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   private _playerName: string | undefined;
+
+  private statusSubject = new BehaviorSubject<Status>(Status.PLAYING);
+  public status$: Observable<Status> = this.statusSubject.asObservable();
 
   private stageSubject = new BehaviorSubject<TQuestionIndex>(1);
   public stage$: Observable<TQuestionIndex> = this.stageSubject.asObservable();
@@ -18,8 +21,11 @@ export class GameService {
   private correctAnswerSubject = new BehaviorSubject<TAnswer | null>(null);
   private correctAnswer$: Observable<TAnswer | null> = this.correctAnswerSubject.asObservable();
 
-  public loadingSubject = new BehaviorSubject<boolean>(false);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$: Observable<boolean> = this.loadingSubject.asObservable();
+
+  private selectedAnswerSubject = new BehaviorSubject<TSelectedAnswer | null>(null)
+  public selectedAnswer$ = this.selectedAnswerSubject.asObservable();
 
   constructor(private dataService: DataService) { }
 
@@ -43,7 +49,9 @@ export class GameService {
   }
 
   public loadNextQuestion(): void {
-    this.loadingSubject.next(true)
+    if (this.stageSubject.value === 15) return;
+
+    this.loadingSubject.next(true);
     const nextStage = this.stageSubject.value + 1 as TQuestionIndex;
 
     this.stageSubject.next(nextStage)
@@ -69,5 +77,18 @@ export class GameService {
   public clearQuestion(): void {
     this.questionSubject.next(null);
     this.correctAnswerSubject.next(null);
+  }
+
+  public selectAnswer(answer: TSelectedAnswer) {
+      if (answer === this.selectedAnswerSubject.value) {
+        this.selectedAnswerSubject.next(null);
+      } else {
+        this.selectedAnswerSubject.next(answer);
+      }
+  }
+
+  public submitAnswer(): void {
+    console.log(this.selectedAnswerSubject.value);
+    this.statusSubject.next(Status.NEXT);
   }
 }

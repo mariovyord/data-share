@@ -7,10 +7,11 @@
         <app-question [question]="question$ | async"></app-question>
       </div>
       <div class="mb-10">
-        <app-answers [question]="question$ | async"></app-answers>
+        <app-answers [onSelect]="onSelect" [question]="question$ | async"></app-answers>
       </div>
       <div class="flex justify-center">
-        <app-submit-answer></app-submit-answer>
+        <app-submit-answer (click)="onSubmit()" *ngIf="(status$ | async) === Status.PLAYING">Submit</app-submit-answer>
+        <app-submit-answer (click)="onNext()" *ngIf="(status$ | async) === Status.NEXT">Next</app-submit-answer>
       </div>
     </div>
 </div>

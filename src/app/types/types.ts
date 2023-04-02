@@ -13,3 +13,5 @@ export enum Status {
   NEXT = "NEXT",
   GAME_OVER = "GAME_OVER"
 }
+
+export type TSelectedAnswer = 0 | 1 | 2 | 3;
