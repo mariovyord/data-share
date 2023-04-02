@@ -1,6 +1,7 @@
 <div
-  class="border-2 border-white rounded-full hover:bg-blue-400 hover:text-blue-900 hover:cursor-pointer p-3 text-2xl text-white flex align-middle justify-center"
-  [class.bg-orange-500]="selected"
+  class="border-2 border-white rounded-full hover:bg-blue-400 hover:text-blue-900 hover:cursor-pointer p-3 text-2xl text-white flex align-middle justify-center
+  {{ selected ? 'bg-orange-500' : '' }}
+  {{ isCorrect ? 'bg-green-400 animate-pulse' : '' }}"
 >
   <ng-content></ng-content>
 </div>

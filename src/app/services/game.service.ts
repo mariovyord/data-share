@@ -19,7 +19,7 @@ export class GameService {
   public question$: Observable<TQuestion | null> = this.questionSubject.asObservable();
 
   private correctAnswerSubject = new BehaviorSubject<TAnswer | null>(null);
-  private correctAnswer$: Observable<TAnswer | null> = this.correctAnswerSubject.asObservable();
+  public correctAnswer$: Observable<TAnswer | null> = this.correctAnswerSubject.asObservable();
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$: Observable<boolean> = this.loadingSubject.asObservable();
@@ -65,13 +65,15 @@ export class GameService {
     ).subscribe();
   }
 
-  public loadAnswer(): void {
-    this.dataService.getAnswer(this.stageSubject.value, "TEST").pipe(
-      mergeMap(answer => {
-        this.correctAnswerSubject.next(answer);
-        return of(answer);
-      })
-    ).subscribe();
+  public loadAnswer(): Observable<TAnswer | null> {
+    if (this.questionSubject.value) {
+      return this.dataService.getAnswer(this.stageSubject.value, this.questionSubject.value.id)
+        .pipe(tap(answer => {
+            this.correctAnswerSubject.next(answer);
+        }));
+    } else {
+      return of(null);
+    }
   }
 
   public clearQuestion(): void {
@@ -88,7 +90,20 @@ export class GameService {
   }
 
   public submitAnswer(): void {
-    console.log(this.selectedAnswerSubject.value);
-    this.statusSubject.next(Status.NEXT);
-  }
+    if (Object.is(this.questionSubject.value, null) || Object.is(this.selectedAnswerSubject.value, null)) {
+      return ;
+    }
+
+    const selected = this.selectedAnswerSubject.value;
+
+    this.loadAnswer()
+        .subscribe(answer => {
+          console.log(selected, answer)
+          if (selected === answer?.correct_answer) {
+            this.statusSubject.next(Status.NEXT);
+          } else {
+            this.statusSubject.next(Status.GAME_OVER);
+          }
+        })
+    }
 }

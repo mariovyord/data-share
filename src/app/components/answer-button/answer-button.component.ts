@@ -6,4 +6,5 @@ import { Component, Input } from '@angular/core';
 })
 export class AnswerButtonComponent {
   @Input() public selected: boolean = false;
+  @Input() public isCorrect: boolean = false;
 }

@@ -6,7 +6,7 @@ export type TQuestion = {
   answers: [string, string, string, string];
 };
 
-export type TAnswer = { id: string, correct_answer: number };
+export type TAnswer = { id: string, correct_answer: TSelectedAnswer };
 
 export enum Status {
   PLAYING = "PLAYING",
