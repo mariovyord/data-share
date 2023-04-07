@@ -6,21 +6,13 @@ import {Status, TSelectedAnswer} from "../../types/types";
   selector: 'app-game',
   templateUrl: './game.component.html',
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   public question$ = this.gameService.question$;
   public stage$ = this.gameService.stage$;
   public status$ = this.gameService.status$;
   readonly Status = Status;
 
   constructor(public gameService: GameService) {}
-
-  public ngOnInit() {
-    this.startGame();
-  }
-
-  public startGame() {
-    this.gameService.startGame();
-  }
 
   public onSubmit(): void {
     this.gameService.submitAnswer();

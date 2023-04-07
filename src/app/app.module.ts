@@ -12,6 +12,8 @@ import { AnswersComponent } from './components/answers/answers.component';
 import { QuestionComponent } from './components/question/question.component';
 import { SubmitAnswerComponent } from './components/submit-answer/submit-answer.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { StartComponent } from './components/start/start.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -24,12 +26,14 @@ import { LoadingComponent } from './components/loading/loading.component';
     QuestionComponent,
     SubmitAnswerComponent,
     LoadingComponent,
+    StartComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        CoreModule,
+        ReactiveFormsModule,
+    ],
   providers: [],
   exports: [
     HomeComponent,

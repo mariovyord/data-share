@@ -39,7 +39,8 @@ export class GameService {
     }
   }
 
-  public startGame(): void {
+  public startGame(name: string): void {
+    this.setPlayerName(name);
     this.dataService.getQuestion(1).pipe(
       mergeMap(question => {
         this.questionSubject.next(question);

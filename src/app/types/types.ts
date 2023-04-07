@@ -11,6 +11,7 @@ export type TAnswer = { id: string, correct_answer: TSelectedAnswer };
 export enum Status {
   PLAYING = "PLAYING",
   NEXT = "NEXT",
+  LOADING = "LOADING",
   GAME_OVER = "GAME_OVER"
 }
 
